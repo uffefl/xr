@@ -1,0 +1,64 @@
+﻿-f
+D:\CommunityResourcePack\GameData\CommunityResourcePack\CommonResources.cfg
+-f
+D:\Steam\SteamApps\common\Kerbal Space Program\GameData\Squad\Resources\ResourcesGeneric.cfg
+-re
+\s*//.*
+
+-re
+\s*(\S+)\s*=\s*(.*?)\r?\n\s*
+\t<$1>$2</$1>\n
+-re
+\s*(\S+)\s*{([^}]*)}\s*
+<$1>\n$2</$1>\n
+-re
+(.*)
+\t$1
+-re
+([\s\S]+)
+<cfg>\n$1\n</cfg>
+-xsl
+csv.xsl
+-o
+testoutput.csv
+-f
+D:\MKS\GameData\UmbraSpaceIndustries\OKS\Parts\OKS_AssemblyPlant.cfg
+-re
+&
+&amp;
+-re
+<
+&lt;
+-re
+>
+&gt;
+-re
+//(.*)
+<!--$1-->
+-re
+\s*(\S+)\s*=\s*(.*?)\r?\n\s*
+\t<$1>$2</$1>\n
+-re
+\s*(\S+)\s*{([^{}]*)}\s*
+<$1>\n$2</$1>\n
+-re
+\s*(\S+)\s*{([^{}]*)}\s*
+<$1>\n$2</$1>\n
+-re
+\s*(\S+)\s*{([^{}]*)}\s*
+<$1>\n$2</$1>\n
+-re
+([\s\S]+)
+<parts>\n$1\n</parts>
+-rei
+([\t ]*)<inputResources>\s*([^,]+)\s*,\s*(\d+(\.\d+)?)\s*,\s*(.*)</inputResources>
+$1<inputResources>$5</inputResources>\n$1<input name="$2" amount="$3"/>
+-re
+<inputResources>\s*([^,]+)\s*,\s*(\d+(\.\d+)?)\s*</inputResources>
+<input name="$1" amount="$2"/>
+-rei
+([\t ]*)<outputResources>\s*([^,]+)\s*,\s*(\d+(\.\d+)?)\s*,\s*([^,]+)\s*,\s*(.*)</outputResources>
+$1<outputResources>$6</outputResources>\n$1<output name="$2" amount="$3" overflow="$5"/>
+-re
+<outputResources>\s*([^,]+)\s*,\s*(\d+(\.\d+)?)\s*,\s*([^,]+)\s*</outputResources>
+<output name="$1" amount="$2" overflow="$4"/>
